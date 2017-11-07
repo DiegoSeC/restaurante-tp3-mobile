@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Asignación de Transporte</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-3>Fecha:</ion-col>
+      <ion-col col-9>{{ waybill.date }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>Guía de Remisión:</ion-col>
+      <ion-col col-9>GR{{ waybill.document_number }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>Guía de Salida:</ion-col>
+      <ion-col col-9>GS{{ waybill.document_number }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>Almacén Origen:</ion-col>
+      <ion-col col-9>{{ waybill.warehouse_from.code }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>Almacén Destino:</ion-col>
+      <ion-col col-9>{{ waybill.warehouse_to.code }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>Estado:</ion-col>
+      <ion-col col-9>{{ waybill.delivery_status }}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>Contacto de Almacén:</ion-col>
+      <ion-col col-9>{{ waybill.warehouse_to.contact }} <{{ waybill.warehouse_to.phone_number }}></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div id="map"></div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <button ion-button block color="light" (click)="showPrompt('Finalizar', 'Guía Finalizada', 'Finalizado')">{{ buttonText }}</button>
+  <button ion-button block color="danger" (click)="showPrompt('Cancelar', 'Guía Cancelada', 'Cancelado')">Cancelar</button>
+
+</ion-content>

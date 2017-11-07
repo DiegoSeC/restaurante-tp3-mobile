@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Asignación de Transporte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Guía de Remisión</th>
+        <th>Origen</th>
+        <th>Destino</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let waybill of waybills; let i = index;" (click)="goTo(waybill)">
+        <td>
+          <ion-checkbox color="light" (ionChange)="updateModel(i)"></ion-checkbox>
+        </td>
+        <td>{{ waybill.document_number }}</td>
+        <td>{{ waybill.warehouse_from.code }}</td>
+        <td>{{ waybill.warehouse_to.code }}</td>
+        <td>{{ waybill.delivery_status }}</td>
+      </tr>
+      <tr *ngIf="waybills && waybills.length === 0">
+        <td colspan="5">No se encuentra criterio de búsqueda</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button ion-button block color="light" (click)="changeStatus('En Ruta')">Iniciar</button>
+  <button ion-button block color="danger" (click)="promptWaybills('Finalizado', 'Finalizar', 'Guías Finalizadas')">Finalizar</button>
+  <button ion-button block (click)="promptWaybills('Cancelado', 'Cancelar', 'Guías Canceladas')">Cancelar</button>
+</ion-content>
