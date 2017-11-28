@@ -42,7 +42,9 @@
     </ion-row>
   </ion-grid>
 
-  <button ion-button block color="light" (click)="showPrompt('Finalizar', 'Guía Finalizada', 'Finalizado')">{{ buttonText }}</button>
-  <button ion-button block color="danger" (click)="showPrompt('Cancelar', 'Guía Cancelada', 'Cancelado')">Cancelar</button>
+  <button ion-button block *ngIf="waybill.delivery_status === 'pending' || waybill.delivery_status === 'progress'"
+          color="light" (click)="showPrompt('Finalizar', 'Guía Finalizada', 'completed')">{{ buttonText }}</button>
+  <button ion-button block *ngIf="waybill.delivery_status === 'pending' || waybill.delivery_status === 'progress'"
+          color="danger" (click)="showPrompt('Cancelar', 'Guía Cancelada', 'canceled')">Cancelar</button>
 
 </ion-content>

@@ -30,7 +30,7 @@ export class DeliveryDetailPage {
     public alertCtrl: AlertController,
     private toastCtrl: ToastController) {
       this.waybill = this.navParams.get('waybill');
-      this.buttonText = (this.waybill.delivery_status === 'En Ruta')
+      this.buttonText = (this.waybill.delivery_status === 'progress')
         ? 'Finalizar' : 'Iniciar';
   }
 
@@ -40,7 +40,7 @@ export class DeliveryDetailPage {
 
   showPrompt(title: string, message: string, status: string) {
     if (this.buttonText === 'Iniciar') {
-      this.waybill.delivery_status = 'En Ruta';
+      this.waybill.delivery_status = 'progress';
       this.buttonText = 'Finalizar';
       this.restaurant.updateWaybill(this.waybill).subscribe(data => console.log(data));
       return null;

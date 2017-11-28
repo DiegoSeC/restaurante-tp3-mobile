@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController } from 'ionic-angular';
 import { Restaurant } from '../../providers/providers';
+import { Observable } from 'rxjs';
 
 import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
@@ -18,7 +19,8 @@ export class DeliveryPage {
   constructor(public navCtrl: NavController,
             public restaurant: Restaurant,
             public alertCtrl: AlertController,
-            private toastCtrl: ToastController) {
+            private toastCtrl: ToastController,
+            public loadingCtrl: LoadingController) {
     this.getDelivery();
   }
 
@@ -29,7 +31,7 @@ export class DeliveryPage {
   }
 
   updateModel(index: number) {
-    this.waybills[index].checked = true;
+    // this.waybills[index].checked = true;
   }
 
   filterItems(ev: any) {
@@ -48,20 +50,45 @@ export class DeliveryPage {
   }
 
   changeStatus(status: string, observacion = '') {
+    const loader = this.loadingCtrl.create({
+      content: "Por favor espere..."
+    });
+
+    let updateModelsApi = [];
+    let showLoader = false;
+
     this.waybills = this.waybills.map(waybill => {
-      if(waybill.checked === true) {
+      if(waybill.checked === true &&
+        (waybill.delivery_status === 'pending' || waybill.delivery_status === 'progress')) {
         waybill.delivery_status = status;
         waybill.comment = observacion;
+        updateModelsApi.push(this.restaurant.updateWaybill(waybill));
+        showLoader = true;
       }
 
       return waybill;
     });
+
+    if(showLoader) {
+      loader.present();
+    }
+
+    Observable.forkJoin(updateModelsApi).subscribe(data => loader.dismiss());
   }
 
   promptWaybills(status: string, title: string, message: string) {
     let showPrompt = this.waybills.filter(waybill => waybill.checked === true);
 
     if(showPrompt.length === 0) {
+      return null;
+    }
+
+
+
+    if(showPrompt.length === 1 && (
+      showPrompt[0].delivery_status === 'completed' ||
+      showPrompt[0].delivery_status === 'canceled'
+    )) {
       return null;
     }
 

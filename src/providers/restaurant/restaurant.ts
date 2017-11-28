@@ -11,9 +11,9 @@ export class Restaurant {
   }
 
   updateWaybill(waybill: any) {
-    return this.api.patch(`waybills/${waybill.uuid}`, {
+    return this.api.put(`waybills/${waybill.uuid}`, {
       delivery_status: waybill.delivery_status,
-      status: waybill.delivery_status,
+      status: waybill.status,
       comment: waybill.comment
     });
   }
