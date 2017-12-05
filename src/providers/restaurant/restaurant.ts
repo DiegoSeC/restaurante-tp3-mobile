@@ -7,7 +7,7 @@ export class Restaurant {
   constructor(public api: Api) { }
 
   getWaybills() {
-    return this.api.get('carriers/15cb35c0-65f6-3687-974e-87e3259c059a/waybills');
+    return this.api.get('carriers/9280d751-d37d-3846-b11c-855cffefef98/waybills');
   }
 
   updateWaybill(waybill: any) {
